@@ -45,20 +45,26 @@ reddit = praw.Reddit(user_agent='XXXX',
                      client_id=bot_client_ID, client_secret=bot_secret,
                      username=bot_username, password=bot_password)
 
+print("Praw connected")
+print("Connecting Subreddit")
 sub = reddit.subreddit("wallpapers")
 count = 0
 img_arr = []
+print("getting subreddit")
 
+print("scrapping image links")
 for submission in sub.top('week'):
 	url = str(submission.url)
 	if(('i.redd.it' in url) or ('i.imgur.com' in url)):
 		if(check_dim(url)):
 			img_arr.append(url)
 			count+=1
-	if(count==2):
+	if(count==100):
 		break
-print(img_arr)
+
+print("Image links recieved")
 
 for idx,url in enumerate(img_arr):
-	download_img(idx,url)		
+	download_img(idx,url)
+	print("downloaded  ---->"+url)		
 
